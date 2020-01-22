@@ -8,7 +8,9 @@ import de.zenhomes.assignment.service.CounterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @Service
@@ -22,13 +24,15 @@ public class CounterServiceImpl implements CounterService {
     }
 
     @Override
+    @Transactional
     public void saveCounterRecord(CounterRecordDto dto) {
         logger.debug("CounterServiceImpl.saveCounterRecord.start");
-
-        var record = new RecordEntity();
-        record.setAmount(dto.getAmount());
         var counter = counterRepository.findById(dto.getCounterId())
                 .orElseThrow(NoSuchElementException::new);
+        var record = new RecordEntity();
+        record.setAmount(dto.getAmount());
+        record.setCreatedAt(LocalDateTime.now());
+        record.setCounter(counter);
         counter.getRecords().add(record);
         counterRepository.save(counter);
 

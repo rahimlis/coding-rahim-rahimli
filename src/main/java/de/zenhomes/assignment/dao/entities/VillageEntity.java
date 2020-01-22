@@ -1,10 +1,7 @@
 package de.zenhomes.assignment.dao.entities;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -25,5 +22,7 @@ public class VillageEntity {
     private String name;
 
     @OneToMany(mappedBy = "village")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<CounterEntity> counters;
 }
