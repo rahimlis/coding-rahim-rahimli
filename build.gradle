@@ -41,6 +41,8 @@ dependencies {
     annotationProcessor("org.mapstruct:mapstruct-jdk8:$mapstructVersion")
     annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
+    implementation('com.google.guava:guava')
+
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }

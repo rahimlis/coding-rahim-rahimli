@@ -1,7 +1,11 @@
 package de.zenhomes.assignment.dao.repos;
 
-import de.zenhomes.assignment.dao.entities.CounterEntity;
+import de.zenhomes.assignment.dao.entities.RecordEntity;
 import org.springframework.data.repository.CrudRepository;
 
-public interface RecordRepository extends CrudRepository<CounterEntity, Long> {
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface RecordRepository extends CrudRepository<RecordEntity, Long> {
+    List<RecordEntity> findAllByCreatedAtAfter(LocalDateTime startingDate);
 }
