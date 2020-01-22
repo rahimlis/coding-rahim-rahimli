@@ -1,0 +1,86 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: Rahim Rahimli
+      changes:
+        - createTable:
+            tableName: village
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(128)
+                  constraints:
+                    nullable: false
+
+
+        - createTable:
+            tableName: counter
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: village_id
+                  type: int
+                  constraints:
+                    nullable: false
+
+        - createTable:
+            tableName: record
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: counter_id
+                  type: int
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: double
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: counter
+            baseColumnNames: village_id
+            constraintName: fk_village_id
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: village
+
+        - addForeignKeyConstraint:
+            baseTableName: record
+            baseColumnNames: counter_id
+            constraintName: fk_counter_id
+            onDelete: CASCADE
+            referencedColumnNames: id
+            referencedTableName: counter
+
+        - sqlFile:
+            dbms: h2
+            encoding: UTF-8
+            path: liquibase/db-changelog-1.0.sql
+            splitStatements: true
+            stripComments: true
