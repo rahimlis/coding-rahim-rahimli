@@ -3,6 +3,7 @@ package de.zenhomes.assignment.rest;
 import de.zenhomes.assignment.model.ConsumptionReportDto;
 import de.zenhomes.assignment.model.TimeFrame;
 import de.zenhomes.assignment.service.ReportService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +22,8 @@ public class ReportController {
 
 
     @GetMapping("consumption_report")
+    @ApiOperation("Generates consumption reports. Limited choice of duration parameter is assumed, therefore " +
+            "it makes sense to enclose them in timeframe enum which holds different variations")
     public ResponseEntity<ConsumptionReportDto> getConsumptionReport(@RequestParam("duration") TimeFrame duration) {
         logger.debug("ReportController.getConsumptionReport.start");
         var report = reportService.generateConsumptionReport(duration);

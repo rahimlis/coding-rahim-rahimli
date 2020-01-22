@@ -3,6 +3,7 @@ package de.zenhomes.assignment.rest;
 import de.zenhomes.assignment.model.CounterInfoDto;
 import de.zenhomes.assignment.model.CounterRecordDto;
 import de.zenhomes.assignment.service.CounterService;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ public class CounterController {
     }
 
     @PostMapping("/counter_callback")
+    @ApiOperation("Saves new record with amount assigned to counter. If counter doesn't exist the exception is raised")
     public ResponseEntity saveCounterRecord(@RequestBody CounterRecordDto recordDto) {
         logger.debug("Controller.saveCounterRecord.start");
         counterService.saveCounterRecord(recordDto);
@@ -28,6 +30,7 @@ public class CounterController {
     }
 
     @GetMapping("/counter")
+    @ApiOperation("Fetches info about counter. If counter doesn't exist the exception is raised")
     public ResponseEntity<CounterInfoDto> getCounterInfo(@RequestParam("id") Long id) {
         logger.debug("Controller.getCounterInfo.start");
         var counterInfo = counterService.getCounterInfo(id);
