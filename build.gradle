@@ -7,7 +7,7 @@ plugins {
 
 group 'de.zehnhomes'
 version '1.0'
-sourceCompatibility = '1.8'
+sourceCompatibility = 11
 
 repositories {
     mavenCentral()
@@ -18,15 +18,27 @@ ext {
     logbackVersion = '5.2'
     junitVersion = '4.13'
     spockVersion = '1.2-groovy-2.5'
+    mapstructVersion = '1.2.0.Final'
 }
 
 dependencies {
+    //spring core
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation('org.springframework.boot:spring-boot-starter-validation')
     implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+
+    //monitoring and docs
     implementation("io.springfox:springfox-swagger2:$swaggerVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logbackVersion")
+
+    //data
     implementation('com.h2database:h2')
+    implementation('org.liquibase:liquibase-core')
+
+    compileOnly('org.projectlombok:lombok')
+    annotationProcessor('org.projectlombok:lombok')
+    annotationProcessor("org.mapstruct:mapstruct-jdk8:$mapstructVersion")
+    annotationProcessor("org.mapstruct:mapstruct-processor:$mapstructVersion")
 
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
